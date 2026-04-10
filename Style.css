@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Title */
+h1 {
+    color: #ffd700;
+    text-shadow: 0 0 15px #ffd700, 0 0 30px #ffea00;
+    margin-bottom: 25px;
+    font-size: 40px;
+}
+
+/* Section headings */
+h2 {
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Search box */
+input {
+    padding: 12px;
+    width: 350px;
+    border-radius: 10px;
+    border: 2px solid #ffd700;
+    background: #111;
+    color: white;
+    outline: none;
+}
+
+input:focus {
+    box-shadow: 0 0 12px #ffd700;
+}
+
+/* Button */
+button {
+    padding: 12px 25px;
+    border-radius: 10px;
+    background: #ffd700;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ffea00;
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #ffd700;
+}
+
+/* Sections */
+.section {
+    margin-top: 50px;
+}
+
+/* Movie container */
+.movies {
+    display: flex;
+    justify-content: flex-start; /* spread like Netflix */
+    flex-wrap: wrap;
+    padding: 10px 40px;
+}
+
+/* Card */
+.card {
+    background: #111;
+    padding: 18px;
+    margin: 15px;
+    border-radius: 15px;
+    width: 220px;
+    transition: 0.3s;
+    border: 1px solid #222;
+    text-align: left;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.08);
+    box-shadow: 0 0 25px #ffd700;
+}
+
+/* Top cards */
+.top {
+    border: 2px solid #ffd700;
+    box-shadow: 0 0 15px #ffd700;
+}
+
+/* Badge */
+.badge {
+    color: #ffd700;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+/* Rating */
+.rating {
+    margin-top: 10px;
+    color: #ffea00;
+}
+
+/* Error */
+.error {
+    color: red;
+    margin-top: 10px;
+}

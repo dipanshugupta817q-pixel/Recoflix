@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RecoFlix 🎬</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .chips {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .chip {
+            padding: 10px 18px;
+            margin: 6px;
+            border-radius: 20px;
+            border: 1px solid #ffd700;
+            background: transparent;
+            color: #ffd700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chip:hover {
+            background: #ffd700;
+            color: black;
+        }
+
+        .chip.active {
+            background: #ffd700;
+            color: black;
+            box-shadow: 0 0 10px #ffd700;
+        }
+    </style>
+
+    <script>
+        let selected = [];
+
+        function toggleChip(element, value) {
+            if (selected.includes(value)) {
+                selected = selected.filter(v => v !== value);
+                element.classList.remove("active");
+            } else {
+                if (selected.length < 3) {
+                    selected.push(value);
+                    element.classList.add("active");
+                } else {
+                    alert("Select only 3 categories!");
+                }
+            }
+
+            document.getElementById("genre1").value = selected[0] || "";
+            document.getElementById("genre2").value = selected[1] || "";
+            document.getElementById("genre3").value = selected[2] || "";
+        }
+    </script>
+
+</head>
+
+<body>
+
+<h1>RecoFlix 🎬</h1>
+
+<!-- CATEGORY SECTION -->
+<form action="/suggest" method="post">
+
+    <h2>🎭 Select up to 3 Categories</h2>
+
+    <div class="chips">
+        <div class="chip" onclick="toggleChip(this,'Action')">Action</div>
+        <div class="chip" onclick="toggleChip(this,'Comedy')">Comedy</div>
+        <div class="chip" onclick="toggleChip(this,'Drama')">Drama</div>
+        <div class="chip" onclick="toggleChip(this,'Horror')">Horror</div>
+        <div class="chip" onclick="toggleChip(this,'Thriller')">Thriller</div>
+        <div class="chip" onclick="toggleChip(this,'Romance')">Romance</div>
+        <div class="chip" onclick="toggleChip(this,'Crime')">Crime</div>
+        <div class="chip" onclick="toggleChip(this,'Adventure')">Adventure</div>
+        <div class="chip" onclick="toggleChip(this,'Sci-Fi')">Sci-Fi</div>
+        <div class="chip" onclick="toggleChip(this,'Fantasy')">Fantasy</div>
+        <div class="chip" onclick="toggleChip(this,'Mystery')">Mystery</div>
+        <div class="chip" onclick="toggleChip(this,'Animation')">Animation</div>
+    </div>
+
+    <!-- Hidden inputs -->
+    <input type="hidden" name="genre1" id="genre1">
+    <input type="hidden" name="genre2" id="genre2">
+    <input type="hidden" name="genre3" id="genre3">
+
+    <br>
+    <button type="submit">🎯 Suggest Movies</button>
+</form>
+
+<hr style="margin:40px; border-color:#333;">
+
+<!-- SEARCH -->
+<form action="/recommend" method="post">
+    <input type="text" name="movie" placeholder="Search movie..." required>
+    <button type="submit">Search</button>
+</form>
+
+<!-- SELECTED MOVIE -->
+{% if selected %}
+<div class="section">
+    <h2>🎯 Your Selected Movie</h2>
+
+    <div class="movies">
+        <div class="card top">
+            <h3>{{ selected[0] }}</h3>
+            ⭐ {{ selected[1] }}
+
+            {% if selected[1] >= 7 %}
+                <div class="badge">🔥 Must Watch</div>
+            {% else %}
+                <div class="badge">👍 Decent</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- CATEGORY RESULTS -->
+{% if top5 %}
+<div class="section">
+    <h2>🔥 Top Picks</h2>
+
+    <div class="movies">
+        {% for m, r in top5 %}
+        <div class="card top">
+            <div class="badge">🔥 Must Watch</div>
+            <h3>{{ m }}</h3>
+            ⭐ {{ r }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if others %}
+<div class="section">
+    <h2>🎬 Recommended</h2>
+
+    <div class="movies">
+        {% for m, r in others %}
+        <div class="card">
+            <h3>{{ m }}</h3>
+            ⭐ {{ r }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- SEARCH RESULTS -->
+{% if top3 %}
+<div class="section">
+    <h2>🔍 Must Watch (Search)</h2>
+
+    <div class="movies">
+        {% for m, r in top3 %}
+        <div class="card top">
+            <div class="badge">🔥 Must Watch</div>
+            <h3>{{ m }}</h3>
+            ⭐ {{ r }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
